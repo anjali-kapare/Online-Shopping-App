@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 
 import AuthContext from '../../store/auth-context';
+import HeaderCartButton from '../Layout/HeaderCartButton'
 import classes from './Navigation.module.css';
 
-const Navigation = () => {
+const Navigation = (props) => {
   const ctx = useContext(AuthContext);
 
   return (
@@ -11,12 +12,7 @@ const Navigation = () => {
       <ul>
         {ctx.isLoggedIn && (
           <li>
-            <a href="/">Users</a>
-          </li>
-        )}
-        {ctx.isLoggedIn && (
-          <li>
-            <a href="/">Admin</a>
+            <HeaderCartButton onClick={props.onCartClick}></HeaderCartButton>
           </li>
         )}
         {ctx.isLoggedIn && (
