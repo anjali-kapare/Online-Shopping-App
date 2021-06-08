@@ -1,4 +1,5 @@
 import React from 'react';
+import Products from '../Products/Products'
 import shopImg from '../../assets/shop.jpeg';
 import classes from './Home.module.css';
 
@@ -6,10 +7,15 @@ import classes from './Home.module.css';
 const Home = (props) => {
 
   return (
- <div className={classes['main-image']}>
-<img src={shopImg} alt="Shop Image" />
+    <React.Fragment>
+      <div className={classes['main-image']}>
+        <img src={shopImg} alt="Shop Image" />
+      </div>
 
-</div>
+      <main>
+      <Products />
+      </main>
+    </React.Fragment>
   );
 };
 
