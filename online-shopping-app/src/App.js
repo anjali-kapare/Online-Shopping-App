@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
 import Cart from "./components/Cart/Cart"
 import AuthContext from './store/auth-context';
+import CartProvider from './store/CartProvider';
 
 function App() {
   const ctx = useContext(AuthContext);
@@ -20,7 +21,7 @@ function App() {
   };
 
   return (
-    <React.Fragment>
+    <CartProvider>
       {ctx.isLoggedIn && cartIsShown && <Cart onClose={hideCartHandler}></Cart>}
       <MainHeader onShowCart={showCartHandler}/>
       <main>
@@ -28,7 +29,7 @@ function App() {
         {!ctx.isLoggedIn && <Login />}
         {ctx.isLoggedIn && <Home />}
       </main>
-    </React.Fragment>
+    </CartProvider>
   );
 }
 
