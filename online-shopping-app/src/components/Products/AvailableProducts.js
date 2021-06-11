@@ -1,35 +1,60 @@
+import {useEffect, useState} from 'react';
 import Card from "../UI/Card/Card";
 import classes from "./AvailableProducts.module.css";
 import Product from "./ShoppingItem/Product";
-const DUMMY_PRODUCTS = [
-  {
-    id: "p1",
-    name: "Hand Bag",
-    imgUrl:
-      "https://assetscdn1.paytm.com/images/catalog/product/B/BA/BAGTHE-MINI-NEESWAB11614678F34BF84/1614419602428_0..jpg",
-    description: "Extra Large Malnov Women’ s Tote Bag",
-    price: 800.99,
-  },
-  {
-    id: "p2",
-    name: "Heels",
-    imgUrl:
-      "https://assets.ajio.com/medias/sys_master/root/20200923/Las3/5f6b6723aeb269d563c90e00/-473Wx593H-460729125-black-MODEL.jpg",
-    description: "Fashion Tails Women Black Heels",
-    price: 1200,
-  },
-  {
-    id: "p3",
-    name: "Wireless Headphones",
-    imgUrl:
-      "https://cdn.shopify.com/s/files/1/0003/7565/2399/products/1_6f1f0328-6ce7-4269-8fdf-4272e2ba01b3_800x.jpg?v=1615889632",
-    description: "WH-74 Over The Ear Wireless Headphones With Mic & FM (Black)",
-    price: 1199,
-  },
-];
 
 const AvailableProducts = () => {
-  const productsList = DUMMY_PRODUCTS.map((product) => (
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null)
+
+
+  useEffect(() => {
+    const fetchProducts = async() => {
+      const response = await fetch('https://react-http-demo-b33f6-default-rtdb.firebaseio.com/products.json');
+      if (!response.ok) {
+        throw new Error('Something went wrong!!')
+      }
+      const productData = await response.json();
+
+      const loadedProducts = [];
+
+      for ( const key in productData) {
+        loadedProducts.push({
+          id: key,
+          name: productData[key].name,
+          description: productData[key].description,
+          price: productData[key].price,
+          imgUrl: productData[key].img,
+        })
+      }
+      setProducts(loadedProducts);
+      setIsLoading(false);
+    };
+
+      fetchProducts().catch((error) => {
+        setIsLoading(false);
+        setError(error.message);
+      });
+  }, []);
+
+  if(isLoading) {
+    return(
+      <section className={classes.ProductLoading}>
+        <p>Loading...</p>
+      </section>
+    )
+  }
+
+  if(error) {
+    return(
+      <section className={classes.ProductError}>
+        <p>{error}</p>
+      </section>
+    )
+  }
+
+  const productsList = products.map((product) => (
     <Card className={classes.card}>
       <Product
         key={product.id}
