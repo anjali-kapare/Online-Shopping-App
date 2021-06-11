@@ -121,7 +121,7 @@ import React, {
             value={passwordState.value}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
-          />
+          /><p className={classes.password}>Password must contain 8 characters. </p>
           <div className={classes.actions}>
             <Button type="submit" className={classes.btn}>
               Login
