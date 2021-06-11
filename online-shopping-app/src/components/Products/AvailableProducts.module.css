@@ -13,6 +13,16 @@
   padding: 0;
 }
 
+.ProductLoading {
+  text-align: center;
+  color: black;
+}
+
+.ProductError{
+  text-align: center;
+  color:red;
+}
+
 @keyframes meals-appear {
   from {
     opacity: 0;
